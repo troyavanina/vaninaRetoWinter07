@@ -1,0 +1,163 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+#root {
+  /* max-width: 1280px; */
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  /* padding: 2rem; */
+  padding: 0px;
+  text-align: center;
+}
+
+body {
+  width: 100%;
+  background: #212121;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #fafafa;
+  margin: 0px;
+}
+
+.divHome {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 190px);
+  margin-top: 40px;
+}
+
+.divBook {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.divLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h1 {
+  color: #fafafa;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: flex-start; */
+  align-items: center;
+  height: 150px;
+  background: #f66d6d;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+nav {
+  display: flex;
+  width: 100%;
+  gap: 100px;
+  /* align-content: center; */
+  justify-content: center;
+  align-items: center;
+  color: #212121;
+  font-size: 20px;
+}
+
+.customLink {
+  color: #fafafa;
+}
+
+.customLink:hover {
+  color: #fcce4b;
+}
+
+.imgBook {
+  height: 500px;
+}
+
+.imgPokeball {
+  height: 40px;
+}
+
+.imgAsh {
+  height: 100px;
+}
+
+.iconHome {
+  height: 40px;
+}
+
+.iconProfile {
+  height: 40px;
+}
+
+.divButton {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.buttonBuy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
+  height: 60px;
+  color: #212121;
+  background: #f66d6d;
+  gap: 6px;
+  padding: 0px;
+  font-weight: 700;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
