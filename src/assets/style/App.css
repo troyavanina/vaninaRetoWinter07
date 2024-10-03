@@ -59,7 +59,15 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 70%;
+  gap: 20px;
+  margin-top: 30px;
+}
 
+.divListSummary {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 70%;
   gap: 20px;
   margin-top: 30px;
@@ -78,7 +86,26 @@ body {
   margin-top: 10px;
 }
 
+.divButton {
+  /* width: 100%; */
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 .divItemCart {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  gap: 30px;
+}
+
+.divItemCheckOut {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -94,6 +121,83 @@ body {
   align-items: center;
 }
 
+.divCheckOut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.divLogIn {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  gap: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.divUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.divPassword {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.divLogInButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.divAsh {
+  width: 100%;
+
+  justify-content: center;
+  display: flex;
+
+  margin-top: 40px;
+}
+
+.divProfile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.label {
+  font-size: 18px;
+}
+
+.input {
+  width: 400px;
+  height: 35px;
+  border-radius: 6px;
+  background-color: #d5cdcd;
+  padding-left: 10px;
+}
+
+.input::placeholder {
+  color: rgb(74, 72, 72);
+  font-style: italic;
+}
+
 h1 {
   color: #fafafa;
   margin-top: 22px;
@@ -102,6 +206,11 @@ h1 {
 
 .h2Total {
   margin-bottom: 20px;
+}
+
+.pNot {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .Cart {
@@ -154,7 +263,7 @@ nav {
 }
 
 .imgAsh {
-  height: 100px;
+  height: 500px;
 }
 
 .iconHome {
@@ -172,14 +281,6 @@ nav {
 .iconDelete {
   height: 25px;
   cursor: pointer;
-}
-
-.divButton {
-  /* width: 100%; */
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
 }
 
 .buttonAdd {
@@ -242,6 +343,70 @@ nav {
   padding: 0px;
   font-weight: 700;
   font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* .buttonBackCart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  color: #212121;
+  background: #fafafa;
+  gap: 6px;
+  padding: 0px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.buttonBackCart:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  color: #fafafa;
+  background: #7d7a7a;
+  gap: 6px;
+  padding: 0px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+} */
+
+.buttonLogIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 416px;
+  height: 50px;
+  color: #212121;
+  background: #f66d6d;
+  gap: 6px;
+  padding: 0px;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.buttonLogIn:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 416px;
+  height: 50px;
+  color: #f66d6d;
+  background: #fcce4b;
+  gap: 6px;
+  padding: 0px;
+  font-weight: 700;
+  font-size: 18px;
   border-radius: 8px;
   cursor: pointer;
 }

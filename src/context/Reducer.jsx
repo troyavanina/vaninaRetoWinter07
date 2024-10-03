@@ -4,6 +4,7 @@ const DAME_LIBRO = "DAME_LIBRO";
 const GUARDAME_LIBRO = "GUARDAME_LIBRO";
 const BORRAME_LIBRO = "BORRAME_LIBRO";
 const RECUPERAR_LIBROS = "RECUPERAR_LIBROS";
+const VACIAR_CARRITO = "VACIAR_CARRITO";
 
 export default function Reducer(state, action) {
   const { payload, type } = action;
@@ -31,5 +32,8 @@ export default function Reducer(state, action) {
 
     case RECUPERAR_LIBROS:
       return { ...state, added: payload };
+
+    case VACIAR_CARRITO:
+      return { ...state, added: [] };
   }
 }

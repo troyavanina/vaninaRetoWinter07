@@ -17,6 +17,10 @@ function ShoppingCart() {
     navigate("/home");
   };
 
+  const handleCheckOut = () => {
+    navigate("/checkOut");
+  };
+
   let sum = 0;
   for (let i = 0; i < added.length; i++) {
     sum += parseInt(added[i].price);
@@ -40,7 +44,9 @@ function ShoppingCart() {
               <button className="buttonGoHome" onClick={handleBack}>
                 SEGUIR COMPRANDO
               </button>
-              <button className="buttonAdd">FINALIZAR COMPRA</button>
+              <button className="buttonAdd" onClick={handleCheckOut}>
+                FINALIZAR COMPRA
+              </button>
             </div>
           </div>
         )}

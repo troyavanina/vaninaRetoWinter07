@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UsingContext from "../context/UsingContext";
 import BookCard from "../containers/ShoppingCart";
 import ShoppingCart from "../containers/ShoppingCart";
+import CheckOut from "../containers/CheckOut";
+import GoodBye from "../components/GoodBye";
 
 // minified version is also included
 // import 'react-toastify/dist/ReactToastify.min.css';
@@ -67,6 +69,8 @@ function App() {
               <Route path="/home" element={<Home />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
               <Route path="/shoppingCart" element={<ShoppingCart />}></Route>
+              <Route path="/checkOut" element={<CheckOut />}></Route>
+              <Route path="/compraFinalizada" element={<GoodBye />}></Route>
             </Routes>
           </Layout>
         </UsingContext>

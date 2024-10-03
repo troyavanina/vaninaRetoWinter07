@@ -1,6 +1,6 @@
 import Context from "./Context";
 import Reducer from "./Reducer";
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useState } from "react";
 import axios from "axios";
 import {
   getDatabase,
@@ -17,7 +17,12 @@ import {
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,6 +43,9 @@ const app = initializeApp(firebaseConfig);
 function UsingContext(props) {
   const db = getDatabase();
 
+  const [log, setLog] = useState(false);
+  const [profileName, setProfileName] = useState("");
+
   const { children } = props;
   const initialState = {
     books: [],
@@ -53,7 +61,7 @@ function UsingContext(props) {
     localStorage.setItem("localSaved", JSON.stringify(added));
   };
 
-  // Recuperar favoritos del localStorage cuando el componente se monta
+  // Recuperar added del localStorage cuando el componente se monta
   useEffect(() => {
     const dataRecovered = localStorage.getItem("localSaved");
     if (dataRecovered) {
@@ -67,7 +75,7 @@ function UsingContext(props) {
     }
   }, []);
 
-  // Guardar automáticamente en localStorage cada vez que cambie 'favoritos'
+  // Guardar automáticamente en localStorage cada vez que cambie 'added'
   useEffect(() => {
     saveInLocalStorage(state.added);
   }, [state.added]);
@@ -95,16 +103,12 @@ function UsingContext(props) {
     console.log("carrito:", state.added);
   };
 
-  //........
-
   const deleteBook = (item) => {
     console.log("deleteBook");
     dispatch({ type: "BORRAME_LIBRO", payload: item });
     // saveInLocalStorage(state.added);
     console.log("los libros que hay en el carrito:", state.added);
   };
-
-  //........
 
   const bookIsAdded = (name) => {
     // if (state.books != null) {
@@ -113,8 +117,88 @@ function UsingContext(props) {
         return true;
       }
     }
-    // }
   };
+  // }
+
+  const userIsLogged = () => {
+    return log;
+  };
+
+  const profileInfo = () => {
+    return profileName;
+  };
+
+  const logIn = (user, pass) => {
+    signInWithEmailAndPassword(auth, user, pass)
+      .then((userCredential) => {
+        console.log("logueó bien!");
+        // Signed in
+        const pUser = userCredential.user;
+        setLog(true);
+        setProfileName(user);
+        // policia(pUser);
+        // ...
+      })
+      .catch((error) => {
+        console.log("logueó mal!", error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("Usuario o contraseña incorrectos");
+      });
+  };
+
+  //auth: herramienta de conexión
+  const auth = getAuth();
+
+  const { policia, guardarUsuario } = props;
+
+  // const handleLogin = () => {
+  //   signInWithEmailAndPassword(auth, usuario, pass)
+  //     .then((userCredential) => {
+  //       // Signed in
+  //       const user = userCredential.user;
+  //       policia(user);
+  //       // ...
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //     });
+  // };
+
+  const logOut = () => {
+    setLog(false);
+  };
+
+  const endCart = () => {
+    dispatch({ type: "VACIAR_CARRITO", payload: [] });
+  };
+
+  const createUser = (user, pass) => {
+    //auth: herramienta de conexión
+    const auth = getAuth();
+
+    //método:
+    createUserWithEmailAndPassword(auth, user, pass)
+      //me da las credenciales:
+      .then((userCredential) => {
+        // Signed up
+        const pUser = userCredential.user;
+        setLog(true);
+        setProfileName(user);
+        // guardarUsuario({ email: user.email, uid: user.uid });
+        // policia(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("Error al crear el usuario");
+        console.log(error);
+        // ..
+      });
+  };
+
   return (
     <Context.Provider
       value={{
@@ -123,6 +207,12 @@ function UsingContext(props) {
         bookIsAdded,
         deleteBook,
         saveInLocalStorage,
+        userIsLogged,
+        logIn,
+        createUser,
+        profileInfo,
+        logOut,
+        endCart,
 
         books: state.books,
         added: state.added,
