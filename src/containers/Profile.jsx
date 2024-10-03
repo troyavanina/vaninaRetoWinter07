@@ -1,7 +1,7 @@
 function Profile() {
   return (
     <>
-      <p>ESTA ES UNA PRUEBA DEL PROFILE</p>
+      <h1>Esta es tu colección de Pokebooks</h1>
     </>
   );
 }

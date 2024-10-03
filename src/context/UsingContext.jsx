@@ -1,55 +1,132 @@
 import Context from "./Context";
 import Reducer from "./Reducer";
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import axios from "axios";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  onChildAdded,
+  set,
+  push,
+  update,
+  onChildChanged,
+  onChildRemoved,
+  onChildMoved,
+} from "firebase/database";
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAGtSSEko1C6pI_2-5LWd3vW4PnaUIADtY",
+  authDomain: "winterhack2024vani.firebaseapp.com",
+  databaseURL: "https://winterhack2024vani-default-rtdb.firebaseio.com",
+  projectId: "winterhack2024vani",
+  storageBucket: "winterhack2024vani.appspot.com",
+  messagingSenderId: "449046923985",
+  appId: "1:449046923985:web:cbb6c9be9e9d2a4c2d93f0",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
 function UsingContext(props) {
+  const db = getDatabase();
+
   const { children } = props;
-  const estadoInicial = {
-    //necesito que tenga un estado inicial de datos
-    // pokemones: [{ name: "pikachu", url: "" }],
-    // favoritos: [],
+  const initialState = {
+    books: [],
+    added: [],
   };
 
-  //El state:
-  //Es una variable que almacena el estado actual de tu componente en un momento dado. El valor de state puede ser cualquier tipo de dato: un número, un string, un booleano, un array, un objeto, etc.
-  //dispatch:
-  //Es una función que se utiliza para enviar acciones al reducer. Las acciones son objetos que tienen al menos una propiedad llamada type que describe qué acción se debe ejecutar.
-  //El reducer:
-  //Es una función pura que toma dos argumentos: el estado actual (state) y una acción (action). Basándose en la action, el reducer devuelve un nuevo estado.
-  //El initialState:
-  //Es el estado inicial que se le pasa a useReducer cuando el componente se monta por primera vez. Define los valores por defecto del estado.
+  const [state, dispatch] = useReducer(Reducer, initialState);
 
-  const [state, dispatch] = useReducer(Reducer, estadoInicial);
-  // const saludar = (nombre) => {
-  //   alert("hola " + nombre);
-  // };
+  //AGREGADO PARA LOCAL STORAGE
 
-  // const traemePokemones = async () => {
-  //   console.log("traemePokemones");
-  //   const res = await axios.get("https://pokeapi.co/api/v2/pokemon/");
-  //   dispatch({
-  //     type: "LISTAME_POKEMONES",
-  //     payload: res.data.results,
-  //   }); //EL STRING SOLO FUNCIONA SI LO DECLARE EN UNA FUNCION ANTES.
-  // };
+  // Guardar en localStorage
+  const saveInLocalStorage = (added) => {
+    localStorage.setItem("localSaved", JSON.stringify(added));
+  };
 
-  // const guardamePokemon = (item) => {
-  //   console.log("guardamePokemon");
-  //   dispatch({ type: "GUARDAME_POKEMON", payload: item });
-  //   console.log("favoritos:", state.favoritos);
-  // };
+  // Recuperar favoritos del localStorage cuando el componente se monta
+  useEffect(() => {
+    const dataRecovered = localStorage.getItem("localSaved");
+    if (dataRecovered) {
+      const addedRecovered = JSON.parse(dataRecovered);
+      if (addedRecovered.length > 0) {
+        dispatch({
+          type: "RECUPERAR_LIBROS",
+          payload: addedRecovered,
+        });
+      }
+    }
+  }, []);
 
+  // Guardar automáticamente en localStorage cada vez que cambie 'favoritos'
+  useEffect(() => {
+    saveInLocalStorage(state.added);
+  }, [state.added]);
+
+  const bringBooks = async () => {
+    console.log("bringBook");
+    // const res = await axios.get("https://pokeapi.co/api/v2/pokemon/");
+
+    const starCountRef = ref(db, "Books/");
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log("data:", data);
+      dispatch({
+        type: "LISTAME_LIBROS",
+        payload: data,
+      }); //EL STRING SOLO FUNCIONA SI LO DECLARE EN UNA FUNCION ANTES.
+    });
+  };
+
+  const addBook = (item) => {
+    console.log("addBook");
+    if (!bookIsAdded(item.name)) {
+      dispatch({ type: "GUARDAME_LIBRO", payload: item });
+    }
+    console.log("carrito:", state.added);
+  };
+
+  //........
+
+  const deleteBook = (item) => {
+    console.log("deleteBook");
+    dispatch({ type: "BORRAME_LIBRO", payload: item });
+    // saveInLocalStorage(state.added);
+    console.log("los libros que hay en el carrito:", state.added);
+  };
+
+  //........
+
+  const bookIsAdded = (name) => {
+    // if (state.books != null) {
+    for (let i = 0; i < state.added.length; i++) {
+      if (state.added[i].name == name) {
+        return true;
+      }
+    }
+    // }
+  };
   return (
     <Context.Provider
-      value={
-        {
-          // saludar,
-          // traemePokemones,
-          // guardamePokemon,
-          // pokemones: state.pokemones,
-          // favoritos: state.favoritos,
-        }
-      }
+      value={{
+        bringBooks,
+        addBook,
+        bookIsAdded,
+        deleteBook,
+        saveInLocalStorage,
+
+        books: state.books,
+        added: state.added,
+      }}
     >
       {children}
     </Context.Provider>
